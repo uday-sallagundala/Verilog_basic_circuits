@@ -1,0 +1,43 @@
+module priority_encoder_8x3_tb();
+		
+   //Testbench global variables
+   reg [7:0] D;
+   wire  [2:0] Y;
+   wire valid;
+   //Variable for loop iteration 
+   //integer i;
+
+   //Step1 : Instantiate the full adder with order based port mapping
+   priority_encoder_8x3 DUT(D,Y,valid);
+
+   //Process to initialize the variables at 0ns
+   initial 
+      begin
+         D   = 8'b00000000;
+      end
+				
+   //Process to generate stimulus using for loop
+   initial
+      begin 
+				#10 D=8'b00000001;
+				#10 D=8'b00000010;
+				#10 D=8'b00000100;
+				#10 D=8'b00001000;
+				#10 D=8'b00010000;
+				#10 D=8'b00100000;
+				#10 D=8'b01000000;
+				#10 D=8'b10000000;
+				#10 D=8'b11111111;
+				#10 D=8'b00000000;
+				//#10 $finish;	
+		 end
+				
+   //Process to monitor the changes in the variables
+   initial 
+      $monitor("Input D=%b, Output Y=%b, valid=%b",D,Y,valid);
+									
+   //Process to terminate simulation after 100ns
+   initial #100 $finish;
+			
+   
+endmodule
