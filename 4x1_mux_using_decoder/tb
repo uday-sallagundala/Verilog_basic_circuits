@@ -1,0 +1,38 @@
+module mux_4to1_using_decoder_tb();
+
+    
+    reg [3:0] data_in;    
+    reg [1:0] select;     
+    wire out;            
+
+    // Instantiate the mux_4to1_using_decoder
+    mux_4to1_using_decoder uut (
+        .data_in(data_in),
+        .select(select),
+        .out(out)
+    );
+
+    // Test sequence
+    initial begin
+        // Initialize the inputs
+        data_in = 4'b0000;  // Initialize data inputs to 0000
+        select = 2'b00;     // Initialize select to 00
+
+        
+        $monitor("At time %t, select = %b, data_in = %b, out = %b", $time, select, data_in, out);
+
+        // test vectors
+        #10 data_in = 4'b1010; select = 2'b00;  
+        #10 data_in = 4'b1010; select = 2'b01;  
+        #10 data_in = 4'b1010; select = 2'b10;  
+        #10 data_in = 4'b1010; select = 2'b11;  
+        #10 data_in = 4'b1100; select = 2'b00;  
+        #10 data_in = 4'b1100; select = 2'b01;  
+        #10 data_in = 4'b1100; select = 2'b10;
+        #10 data_in = 4'b1100; select = 2'b11;  
+
+        
+        #10 $finish;
+    end
+
+endmodule
