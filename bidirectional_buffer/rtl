@@ -1,0 +1,62 @@
+module Bidirectional_Buffer_tb;
+
+    // Testbench signals
+    reg A;            // Data input A
+    reg B;            // Data input B
+    reg DIR;          // Direction control signal
+    wire IO;          // Bidirectional I/O
+
+    // Instantiate the Bidirectional Buffer module
+    Bidirectional_Buffer uut (
+        .A(A),
+        .B(B),
+        .DIR(DIR),
+        .IO(IO)
+    );
+
+    // Test stimulus
+    initial begin
+        // Initialize the signals
+        A = 0;
+        B = 0;
+        DIR = 0;
+        
+        // Test case 1: Direction is input (DIR = 0)
+        $display("Test case 1: Direction = Input (DIR = 0)");
+        A = 1;  // Set A to 1
+        B = 0;  // Set B to 0
+        DIR = 0; // Set direction to input
+        #10;    // Wait for 10 time units
+        $display("A = %b, B = %b, DIR = %b, IO = %b", A, B, DIR, IO);
+
+        // Test case 2: Direction is output (DIR = 1)
+        $display("Test case 2: Direction = Output (DIR = 1)");
+        A = 0;  // Set A to 0
+        B = 1;  // Set B to 1
+        DIR = 1; // Set direction to output
+        #10;    // Wait for 10 time units
+        $display("A = %b, B = %b, DIR = %b, IO = %b", A, B, DIR, IO);
+
+        // Test case 3: Change direction and check values
+        $display("Test case 3: Change Direction");
+        A = 1;  // Set A to 1
+        B = 0;  // Set B to 0
+        DIR = 0; // Set direction to input
+        #10;    // Wait for 10 time units
+        $display("A = %b, B = %b, DIR = %b, IO = %b", A, B, DIR, IO);
+
+        DIR = 1; // Change direction to output
+        #10;    // Wait for 10 time units
+        $display("A = %b, B = %b, DIR = %b, IO = %b", A, B, DIR, IO);
+
+        // Test case 4: Set to high impedance state
+        $display("Test case 4: High Impedance (Tri-State)");
+        A = 0;  // Set A to 0
+        B = 0;  // Set B to 0
+        DIR = 0; // Set direction to input
+        #10;    // Wait for 10 time units
+        $display("A = %b, B = %b, DIR = %b, IO = %b", A, B, DIR, IO);
+
+    end
+
+endmodule
